@@ -11,6 +11,7 @@ public class Student {
         this.name = name;
         this.studentId = studentId;
         this.majorSubject = majorSubject;
+        this.scoreList = new ArrayList<>();
     }
 
     public String getName() {

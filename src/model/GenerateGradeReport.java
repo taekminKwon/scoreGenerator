@@ -13,9 +13,12 @@ public class GenerateGradeReport {
     public static final String HEADER = " 이름  |  학번  |중점과목| 점수   \n";
     public static final String LINE = "-------------------------------------\n";
     private static StringBuffer buffer = new StringBuffer();
-    public static void generate(Subject subject){
+    public static String generate(Subject subject){
         makeHeader(subject);
         makeBody(subject);
+        String report = String.valueOf(buffer);
+        buffer = new StringBuffer();
+        return report;
     }
     public static void makeHeader(Subject subject){
         buffer.append(subject.getSubjectName())
@@ -27,7 +30,7 @@ public class GenerateGradeReport {
     public static void makeBody (Subject subject){
         ArrayList<Student> studentArrayList = subject.getStudentList();
         for (int i = 0; i < studentArrayList.size(); i++) {
-            gradeReturn(studentArrayList.get(i),subject);
+            gradeReturn(studentArrayList.get(i), subject);
         }
     }
     public static void gradeReturn (Student student, Subject subject){
@@ -40,13 +43,13 @@ public class GenerateGradeReport {
                 if(subject.getGradeType() == Define.PF_TYPE) { // PF_TYPE 인지 먼저 확인
                     grade = gradeEvaluation[Define.PF_TYPE].getGrade(score.getPoint());
                 } else{
-                    if(score.getSubject().getSubjectId() == student.getStudentId()){ // 중점 과목일 때,
+                    if(score.getSubject().getSubjectId() == student.getMajorSubject().getSubjectId()){ // 중점 과목일 때,
                         grade = gradeEvaluation[Define.SAB_TYPE].getGrade(score.getPoint());
                     }else
                         grade = gradeEvaluation[Define.AB_TYPE].getGrade(score.getPoint());
                 }
-                buffer.append(" ").append(student.getName()).append("  |  ").append(student.getStudentId())
-                        .append("  |").append(student.getMajorSubject()).append("|  ").append(grade).append('\n');
+                buffer.append(" ").append(student.getName()).append("| ").append(student.getStudentId())
+                        .append(" | ").append(student.getMajorSubject().getSubjectName()).append(" |  ").append(grade).append('\n');
                 buffer.append(LINE);
             }
         }
