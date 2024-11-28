@@ -18,6 +18,10 @@ public class Subject {
         this.subjectId = subjectId;
         this.subjectName = subjectName;
         this.gradeType = Define.AB_TYPE;
+        this.studentList = new ArrayList<>();
+        if(subjectId > 3000){
+            setGradeType(Define.PF_TYPE);
+        }
     }
 
     public void register(Student student){
@@ -50,6 +54,9 @@ public class Subject {
 
     public ArrayList<Student> getStudentList() {
         return studentList;
+    }
+    public void addStudentList(Student student){
+        studentList.add(student);
     }
 
     public void setStudentList(ArrayList<Student> studentList) {
